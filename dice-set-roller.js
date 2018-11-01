@@ -5,24 +5,27 @@ var diceRolls = 4;
 
 function init() {
     for (var i = 0; i < setCount; i++) {
-        document.body.appendChild(document.createTextNode("Set " + (i + 1) + "\u00A0"));
+        document.body.appendChild(document.createTextNode("Set " + (i + 1)));
+        document.body.appendChild(document.createElement("br"));
         generateAndDisplayStatSet();
     }
 }
 
 function generateAndDisplayStatSet() {
-    var message = "";
     for (var i = 0; i < setSize; i++) {
         var curTotal = 0, curMin = diceSides + 1;
+        var message = "";
         for (var j = 0; j < diceRolls; j++) {
             var val = getRandomInt(diceSides) + 1;
             curTotal += val;
             curMin = val < curMin ? val : curMin;
             message += val + (j == diceRolls - 1 ? "" : ", ");
         }
-        message += " : " + (curTotal - curMin) + "\u00A0";
+        message += " : " + (curTotal - curMin);
         var textNode = document.createTextNode(message);
         document.body.appendChild(textNode);
+        document.body.appendChild(document.createElement("br"));
+        document.body.appendChild(document.createElement("br"));
     }
 }
 
