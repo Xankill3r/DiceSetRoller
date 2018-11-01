@@ -5,6 +5,7 @@ var diceRolls = 4;
 
 function init() {
     for (var i = 0; i < setCount; i++) {
+        document.body.appendChild(document.createTextNode("Set " + (i + 1) + "\u00A0"));
         generateAndDisplayStatSet();
     }
 }
@@ -19,7 +20,7 @@ function generateAndDisplayStatSet() {
             curMin = val < curMin ? val : curMin;
             message += val + (j == diceRolls - 1 ? "" : ", ");
         }
-        message += " : " + (curTotal - curMin);
+        message += " : " + (curTotal - curMin) + "\u00A0";
         var textNode = document.createTextNode(message);
         document.body.appendChild(textNode);
     }
