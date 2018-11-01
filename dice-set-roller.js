@@ -6,12 +6,12 @@ var diceRolls = 4;
 function init() {
     for (var i = 0; i < setCount; i++) {
         document.body.appendChild(document.createTextNode("Set " + (i + 1)));
-        document.body.appendChild(document.createElement("br"));
         generateAndDisplayStatSet();
     }
 }
 
 function generateAndDisplayStatSet() {
+	document.body.appendChild(document.createElement("br"));
     for (var i = 0; i < setSize; i++) {
         var curTotal = 0, curMin = diceSides + 1;
         var message = "";
@@ -25,8 +25,8 @@ function generateAndDisplayStatSet() {
         var textNode = document.createTextNode(message);
         document.body.appendChild(textNode);
         document.body.appendChild(document.createElement("br"));
-        document.body.appendChild(document.createElement("br"));
     }
+	document.body.appendChild(document.createElement("br"));
 }
 
 function getRandomInt(max) {
