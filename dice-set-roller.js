@@ -11,6 +11,7 @@ function init() {
 }
 
 function generateAndDisplayStatSet() {
+    var grandTotal = 0;
 	document.getElementById("stats").appendChild(document.createElement("br"));
     for (var i = 0; i < setSize; i++) {
         var curTotal = 0, curMin = diceSides + 1;
@@ -22,11 +23,14 @@ function generateAndDisplayStatSet() {
             message += val + (j == diceRolls - 1 ? "" : ", ");
         }
         message += " : " + (curTotal - curMin);
+        grandTotal += curTotal - curMin;
         var textNode = document.createTextNode(message);
         document.getElementById("stats").appendChild(textNode);
         document.getElementById("stats").appendChild(document.createElement("br"));
     }
+    document.getElementById("stats").appendChild(document.createTextNode("Total : " + grandTotal));
 	document.getElementById("stats").appendChild(document.createElement("br"));
+    document.getElementById("stats").appendChild(document.createElement("br"));
 }
 
 function getRandomInt(max) {
