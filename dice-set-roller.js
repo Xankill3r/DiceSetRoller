@@ -3,16 +3,28 @@ var setSize = 6;
 var diceSides = 6;
 var diceRolls = 4;
 
+var outputText;
 function init() {
+    var ctx = document.getElementById("stats").getContext("2d");
+    outputText = "";
     for (var i = 0; i < setCount; i++) {
-        document.getElementById("stats").appendChild(document.createTextNode("Set " + (i + 1)));
-        generateAndDisplayStatSet();
+        outputText += "Set " + (i + 1);
+        outputText += generateAndDisplayStatSet();
+    }
+    ctx.font = "16px serif"
+    fillTextWithNewlines(ctx, outputText, 5, 15, 18);
+}
+
+function fillTextWithNewlines(ctx, txt, x, y, lineHeight) {
+    var lines = txt.split("\n");
+    for (var i = 0; i < lines.length; i++) {
+        ctx.fillText(lines[i], x, y + (i * lineHeight));
     }
 }
 
 function generateAndDisplayStatSet() {
     var grandTotal = 0;
-	document.getElementById("stats").appendChild(document.createElement("br"));
+    var txt = "\n";
     for (var i = 0; i < setSize; i++) {
         var curTotal = 0, curMin = diceSides + 1;
         var message = "";
@@ -24,51 +36,51 @@ function generateAndDisplayStatSet() {
         }
         message += " : " + (curTotal - curMin);
         grandTotal += curTotal - curMin;
-        var textNode = document.createTextNode(message);
-        document.getElementById("stats").appendChild(textNode);
-        document.getElementById("stats").appendChild(document.createElement("br"));
+        txt += message;
+        txt += "\n";
     }
-    document.getElementById("stats").appendChild(document.createTextNode("Total : " + grandTotal));
-	document.getElementById("stats").appendChild(document.createElement("br"));
-    document.getElementById("stats").appendChild(document.createElement("br"));
+    txt += "Total : " + grandTotal;
+	txt += "\n";
+    txt += "\n";
+    return txt;
 }
 
 function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
+    return Math.floor(Math.random() * Math.floor(max));
 }
 
 function copyStats() {
-    copyTextToClipboard(document.getElementById("stats").innerText);
+    copyTextToClipboard(outputText);
 }
 
 function fallbackCopyTextToClipboard(text) {
-  var textArea = document.createElement("textarea");
-  textArea.value = text;
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
+    var textArea = document.createElement("textarea");
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
 
-  try {
-    var successful = document.execCommand("copy");
-    var msg = successful ? "successful" : "unsuccessful";
-    console.log("Fallback: Copying text command was " + msg);
-  } catch (err) {
-    console.error("Fallback: Oops, unable to copy", err);
-  }
+    try {
+        var successful = document.execCommand("copy");
+        var msg = successful ? "successful" : "unsuccessful";
+        console.log("Fallback: Copying text command was " + msg);
+    } catch (err) {
+        console.error("Fallback: Oops, unable to copy", err);
+    }
 
   document.body.removeChild(textArea);
 }
 function copyTextToClipboard(text) {
-  if (!navigator.clipboard) {
-    fallbackCopyTextToClipboard(text);
-    return;
-  }
-  navigator.clipboard.writeText(text).then(
-    function() {
-      console.log("Async: Copying to clipboard was successful!");
-    },
-    function(err) {
-      console.error("Async: Could not copy text: ", err);
+    if (!navigator.clipboard) {
+        fallbackCopyTextToClipboard(text);
+        return;
     }
-  );
+    navigator.clipboard.writeText(text).then(
+        function() {
+            console.log("Async: Copying to clipboard was successful!");
+        },
+        function(err) {
+            console.error("Async: Could not copy text: ", err);
+        }
+    );
 }
