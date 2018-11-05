@@ -13,6 +13,9 @@ function init() {
     }
     ctx.font = "16px serif"
     fillTextWithNewlines(ctx, outputText, 5, 15, 18);
+    var downloadLink = document.getElementById("save-img-link");
+    downloadLink.download = "stats.png";
+    downloadLink.href = document.getElementById("stats").toDataURL();
 }
 
 function fillTextWithNewlines(ctx, txt, x, y, lineHeight) {
